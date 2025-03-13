@@ -38,9 +38,6 @@ To play the game, follow these steps:
 - The AI opponent will also try to find your planes using an advanced probability-based algorithm.
 - The first player to shoot down all enemy planes wins!
 
-## Repository
-The full source code is available at: [Planes Game GitHub Repository](https://github.com/dosqas/Planes-Game)
-
 ## Contact
 For any questions, suggestions, or issues, feel free to reach out to me:
 - **Email**: [sebastian.soptelea@proton.me](mailto:sebastian.soptelea@proton.me)
