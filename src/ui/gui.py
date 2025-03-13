@@ -1,5 +1,6 @@
 import pygame
 import sys
+import os
 
 
 class GUI:
@@ -11,13 +12,15 @@ class GUI:
         pygame.display.set_caption("Planes")
         self.screen = pygame.display.set_mode((1280, 720))
         self.clock = pygame.time.Clock()
-        self.font = pygame.font.Font(r"ui\textures\PixelType.ttf", 50)
-        pygame.display.set_icon(pygame.image.load(r"ui\textures\icon.png").convert_alpha())
+        font_path = os.path.join(os.path.dirname(__file__), 'textures', 'PixelType.ttf')
+        self.font = pygame.font.Font(font_path, 50)
+        pygame.display.set_icon(
+            pygame.image.load(os.path.join(os.path.dirname(__file__), 'textures', 'icon.png')).convert_alpha())
 
     def start(self):
         self.computer_service.clean_board()
         self.user_service.clean_board()
-        menu = pygame.image.load(r"ui\textures\menu.jpg").convert()
+        menu = pygame.image.load(os.path.join(os.path.dirname(__file__), 'textures', 'menu.jpg')).convert()
 
         main_text_surface = self.font.render("Planes", False, 'black')
         main_text_surface_background = pygame.Surface((main_text_surface.get_width() + 15, main_text_surface.get_height() + 15))
@@ -25,7 +28,9 @@ class GUI:
         main_text_surface_background.fill((148, 91, 72))
         main_text_surface_background_outline.fill((176, 115, 94))
 
-        menu_plane = pygame.image.load(r"ui\textures\menu_plane.png").convert_alpha()
+        menu_plane = pygame.image.load(
+            os.path.join(os.path.dirname(__file__), 'textures', 'menu_plane.png')).convert_alpha()
+
         menu_plane_y_pos = 720
 
         button_for_play = Button(self.screen, 540, 300, 200, 100, "Play")
@@ -65,7 +70,7 @@ class GUI:
             self.clock.tick(60)
 
     def tutorial(self):
-        tutorial = pygame.image.load(r"ui\textures\tutorial.jpg").convert()
+        tutorial = pygame.image.load(os.path.join(os.path.dirname(__file__), 'textures', 'tutorial.jpg')).convert()
 
         main_text_surface = self.font.render("Tutorial", False, 'black')
         main_text_surface_background = pygame.Surface((main_text_surface.get_width() + 15, main_text_surface.get_height() + 15))
@@ -73,7 +78,8 @@ class GUI:
         main_text_surface_background.fill((148, 91, 72))
         main_text_surface_background_outline.fill((176, 115, 94))
 
-        writing_font = pygame.font.Font(r"ui\textures\PixelType.ttf", 30)
+        writing_font = pygame.font.Font(os.path.join(os.path.dirname(__file__), 'textures', 'PixelType.ttf'), 30)
+
         tutorial_text_surface = writing_font.render("Planes is a strategy game played on a 10x10 board, between two players. Each player can only see their own board.", False, 'black')
         tutorial_text_surface_background = pygame.Surface((tutorial_text_surface.get_width() + 15, tutorial_text_surface.get_height() + 15))
         tutorial_text_surface_background.fill((148, 91, 72))
@@ -146,7 +152,7 @@ class GUI:
             self.clock.tick(60)
 
     def tutorial2(self):
-        tutorial = pygame.image.load(r"ui\textures\tutorial.jpg").convert()
+        tutorial = pygame.image.load(os.path.join(os.path.dirname(__file__), 'textures', 'tutorial.jpg')).convert()
 
         main_text_surface = self.font.render("Tutorial", False, 'black')
         main_text_surface_background = pygame.Surface((main_text_surface.get_width() + 15, main_text_surface.get_height() + 15))
@@ -154,7 +160,7 @@ class GUI:
         main_text_surface_background.fill((148, 91, 72))
         main_text_surface_background_outline.fill((176, 115, 94))
 
-        writing_font = pygame.font.Font(r"ui\textures\PixelType.ttf", 30)
+        writing_font = pygame.font.Font(os.path.join(os.path.dirname(__file__), 'textures', 'PixelType.ttf'), 30)
 
         tutorial_text_surface_13 = writing_font.render("or out of bounds. After shooting, the player is relayed back information related to: whether they hit the sky(empty space), a plane", False, 'black')
         tutorial_text_surface_background_13 = pygame.Surface((tutorial_text_surface_13.get_width() + 15, tutorial_text_surface_13.get_height() + 15))
@@ -213,9 +219,10 @@ class GUI:
             self.clock.tick(60)
 
     def play(self):
-        starting_screen = pygame.image.load(r"ui\textures\sky_dim.png").convert()
-        background = pygame.image.load(r"ui\textures\sky.png").convert()
-        game_font = pygame.font.Font(r"ui\textures\PixelType.ttf", 30)
+        starting_screen = pygame.image.load(
+            os.path.join(os.path.dirname(__file__), 'textures', 'sky_dim.png')).convert()
+        background = pygame.image.load(os.path.join(os.path.dirname(__file__), 'textures', 'sky.png')).convert()
+        game_font = pygame.font.Font(os.path.join(os.path.dirname(__file__), 'textures', 'PixelType.ttf'), 30)
 
         main_text_surface = self.font.render("[Strategy phase]", False, 'black')
         main_text_surface_background = pygame.Surface((main_text_surface.get_width() + 15, main_text_surface.get_height() + 15))
@@ -574,9 +581,10 @@ class GUI:
     def play2(self):
         no_planes_user = 3
         no_planes_pc = 3
-        starting_screen = pygame.image.load(r"ui\textures\sky_dim.png").convert()
-        background = pygame.image.load(r"ui\textures\sky.png").convert()
-        game_font = pygame.font.Font(r"ui\textures\PixelType.ttf", 30)
+        starting_screen = pygame.image.load(
+            os.path.join(os.path.dirname(__file__), 'textures', 'sky_dim.png')).convert()
+        background = pygame.image.load(os.path.join(os.path.dirname(__file__), 'textures', 'sky.png')).convert()
+        game_font = pygame.font.Font(os.path.join(os.path.dirname(__file__), 'textures', 'PixelType.ttf'), 30)
 
         main_text_surface = self.font.render("[Play phase]", False, 'black')
         main_text_surface_background = pygame.Surface((main_text_surface.get_width() + 15, main_text_surface.get_height() + 15))
@@ -856,7 +864,7 @@ class GUI:
             self.clock.tick(60)
 
     def lost(self):
-        lost_screen = pygame.image.load(r"ui\textures\lost.png").convert()
+        lost_screen = pygame.image.load(os.path.join(os.path.dirname(__file__), 'textures', 'lost.png')).convert()
         lost_text = self.font.render("[YOU LOST]", False, 'black')
         lost_text_background = pygame.Surface((lost_text.get_width() + 15, lost_text.get_height() + 15))
         lost_text_background.fill((255, 0, 0))
@@ -896,7 +904,7 @@ class GUI:
             self.clock.tick(60)
 
     def won(self):
-        won_screen = pygame.image.load(r"ui\textures\won.png").convert()
+        won_screen = pygame.image.load(os.path.join(os.path.dirname(__file__), 'textures', 'won.png')).convert()
         won_text = self.font.render("[YOU WON]", False, 'black')
         won_text_background = pygame.Surface((won_text.get_width() + 15, won_text.get_height() + 15))
         won_text_background.fill((0, 255, 0))
@@ -942,7 +950,7 @@ class Button:
         self.rect = pygame.Rect(x, y, width, height)
         self.color = (113, 75, 62)
         self.text = text
-        self.font = pygame.font.Font(r"ui\textures\PixelType.ttf", 50)
+        self.font = pygame.font.Font(os.path.join(os.path.dirname(__file__), 'textures', 'PixelType.ttf'), 50)
         self.hover_color = (148, 91, 72)
 
     def draw(self):

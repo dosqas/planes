@@ -196,14 +196,11 @@ class ComputerService:
                     user_board[probable_x + 1][probable_y + 1] = user_board[probable_x + 2][probable_y + 1] = 5
                     user_board[probable_x - 1][probable_y + 3] = user_board[probable_x + 1][probable_y + 3] = 5
 
-            print()
-
             user_board[probable_x][probable_y] = 5
             self._user_board.update_board(user_board)
             for x in range(1, 11):
                 for y in range(1, 11):
                     if user_board[x][y] == 4:
-                        print("hit cockpit, destroy")
                         return "hit_cockpit", "destroy"
             return "hit_cockpit", "hunt"
 
