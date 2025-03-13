@@ -258,27 +258,27 @@ class GUI:
 
         start_time = pygame.time.get_ticks()
 
-        SCREEN_WIDTH, SCREEN_HEIGHT = 1280, 720
-        GRID_SIZE = 10
-        GRID_WIDTH, GRID_HEIGHT = 500, 500
-        CELL_SIZE = GRID_WIDTH // GRID_SIZE
-        GRID_LINE_WIDTH = 5
-        RECTANGLE_MARGIN = 2
+        screen_width, screen_height = 1280, 720
+        grid_size = 10
+        grid_width, grid_height = 500, 500
+        cell_size = grid_width // grid_size
+        grid_line_width = 5
+        rectangle_margin = 2
 
-        GRID_COLOR = (50, 50, 50)
-        GRID_OUTLINE_COLOR = (99, 63, 43)
-        HOVER_COLOR = (255, 255, 255)
-        BAD_HOVER_COLOR = (255, 0, 0)
+        grid_color = (50, 50, 50)
+        grid_outline_color = (99, 63, 43)
+        hover_color = (255, 255, 255)
+        bad_hover_color = (255, 0, 0)
 
-        GRID_X = (SCREEN_WIDTH - GRID_WIDTH) // 2
-        GRID_Y = (SCREEN_HEIGHT - GRID_HEIGHT) // 2
+        grid_x = (screen_width - grid_width) // 2
+        grid_y = (screen_height - grid_height) // 2
 
         hover_row = None
         hover_col = None
         user_board = self.user_service.get_board()
         orientation = 0
-        VALID = None
-        VALID1 = None
+        valid = None
+        valid1 = None
         once = 0
         new_start_time = 0
 
@@ -293,23 +293,23 @@ class GUI:
                         if event.button == 1:  # Left mouse button
                             mouse_x, mouse_y = pygame.mouse.get_pos()
 
-                            for row in range(GRID_SIZE):
-                                for col in range(GRID_SIZE):
-                                    rect = pygame.Rect(GRID_X + col * CELL_SIZE, GRID_Y + row * CELL_SIZE, CELL_SIZE,
-                                                       CELL_SIZE)
+                            for row in range(grid_size):
+                                for col in range(grid_size):
+                                    rect = pygame.Rect(grid_x + col * cell_size, grid_y + row * cell_size, cell_size,
+                                                       cell_size)
 
                                     if rect.collidepoint(mouse_x, mouse_y):
                                         if self.user_service.valid_placement(row + 1, col + 1, orientation):
-                                            VALID = True
-                                            VALID1 = True
+                                            valid = True
+                                            valid1 = True
                                             once = 1
                                             no_planes -= 1
                                             info_text_surface = game_font.render(
                                                 "Info: Click on a space to place your plane there. Mind the border and other planes! Planes left to place: {}.".format(
                                                     no_planes), False, 'black')
                                         else:
-                                            VALID = False
-                                            VALID1 = False
+                                            valid = False
+                                            valid1 = False
                                             once = 1
                     else:
                         if small_restart_button.rect.collidepoint(event.pos):
@@ -332,9 +332,9 @@ class GUI:
                     # Reset the hover color for all cells
                     hover_row, hover_col = None, None
 
-                    for row in range(GRID_SIZE):
-                        for col in range(GRID_SIZE):
-                            rect = pygame.Rect(GRID_X + col * CELL_SIZE, GRID_Y + row * CELL_SIZE, CELL_SIZE, CELL_SIZE)
+                    for row in range(grid_size):
+                        for col in range(grid_size):
+                            rect = pygame.Rect(grid_x + col * cell_size, grid_y + row * cell_size, cell_size, cell_size)
 
                             if rect.collidepoint(mouse_x, mouse_y):
                                 hover_row, hover_col = row, col
@@ -381,41 +381,41 @@ class GUI:
                 self.screen.blit(box_surface, (50, 200))
                 small_menu_button.draw()
 
-                if VALID is not None and once == 1:
+                if valid is not None and once == 1:
                     new_start_time = pygame.time.get_ticks()
-                    VALID = None
+                    valid = None
 
                 new_current_time = pygame.time.get_ticks()
                 if new_current_time - new_start_time > 2000:
                     self.screen.blit(box_surface, (50, 200))
-                    VALID = None
+                    valid = None
                 else:
-                    if VALID1:
+                    if valid1:
                         self.screen.blit(valid_placement_text_surface, (70, 210))
                     else:
                         self.screen.blit(invalid_placement_text_surface, (60, 210))
 
-                pygame.draw.rect(self.screen, GRID_OUTLINE_COLOR, (GRID_X - GRID_LINE_WIDTH, GRID_Y - GRID_LINE_WIDTH, GRID_WIDTH + 2 * GRID_LINE_WIDTH, GRID_HEIGHT + 2 * GRID_LINE_WIDTH))
+                pygame.draw.rect(self.screen, grid_outline_color, (grid_x - grid_line_width, grid_y - grid_line_width, grid_width + 2 * grid_line_width, grid_height + 2 * grid_line_width))
 
                 # Draw the grid
-                for row in range(GRID_SIZE):
-                    for col in range(GRID_SIZE):
-                        rect = pygame.Rect(GRID_X + col * CELL_SIZE, GRID_Y + row * CELL_SIZE, CELL_SIZE, CELL_SIZE)
+                for row in range(grid_size):
+                    for col in range(grid_size):
+                        rect = pygame.Rect(grid_x + col * cell_size, grid_y + row * cell_size, cell_size, cell_size)
 
                         pygame.draw.rect(self.screen, (200, 200, 200), rect, 2)
 
-                        inner_rect = pygame.Rect(rect.left + RECTANGLE_MARGIN, rect.top + RECTANGLE_MARGIN,
-                                                 rect.width - 2 * RECTANGLE_MARGIN, rect.height - 2 * RECTANGLE_MARGIN)
+                        inner_rect = pygame.Rect(rect.left + rectangle_margin, rect.top + rectangle_margin,
+                                                 rect.width - 2 * rectangle_margin, rect.height - 2 * rectangle_margin)
 
                         if user_board[row + 1][col + 1] == 1:
-                            pygame.draw.rect(self.screen, GRID_COLOR, inner_rect)
+                            pygame.draw.rect(self.screen, grid_color, inner_rect)
                         elif user_board[row + 1][col + 1] == 2:
                             pygame.draw.rect(self.screen, (138, 0, 7), inner_rect)
 
                         if no_planes > 0:
                             if hover_row == row and hover_col == col:
                                 check = False
-                                hover_states = [[False] * (GRID_SIZE + 2) for _ in range(GRID_SIZE + 3)]
+                                hover_states = [[False] * (grid_size + 2) for _ in range(grid_size + 3)]
                                 correct_row, correct_col = row + 1, col + 1
                                 if orientation == 0:
                                     if 2 < correct_row < 10 and 2 < correct_col < 9:
@@ -554,13 +554,13 @@ class GUI:
                                     for cnt1 in range(0, 11):
                                         hover_states[cnt][cnt1] = hover_states[cnt + 1][cnt1 + 1]
 
-                                for row1 in range(0, GRID_SIZE):
-                                    for col1 in range(0, GRID_SIZE):
+                                for row1 in range(0, grid_size):
+                                    for col1 in range(0, grid_size):
                                         if hover_states[row1][col1]:
                                             if check:
-                                                pygame.draw.rect(self.screen, HOVER_COLOR, pygame.Rect(GRID_X + col1 * CELL_SIZE, GRID_Y + row1 * CELL_SIZE, CELL_SIZE, CELL_SIZE))
+                                                pygame.draw.rect(self.screen, hover_color, pygame.Rect(grid_x + col1 * cell_size, grid_y + row1 * cell_size, cell_size, cell_size))
                                             else:
-                                                pygame.draw.rect(self.screen, BAD_HOVER_COLOR, pygame.Rect(GRID_X + col1 * CELL_SIZE, GRID_Y + row1 * CELL_SIZE, CELL_SIZE, CELL_SIZE))
+                                                pygame.draw.rect(self.screen, bad_hover_color, pygame.Rect(grid_x + col1 * cell_size, grid_y + row1 * cell_size, cell_size, cell_size))
 
                 if no_planes == 0:
                     self.screen.blit(ready_text_background, (920, 200))
@@ -638,26 +638,26 @@ class GUI:
         user_board = self.user_service.get_board()
         computer_board = self.computer_service.get_board()
 
-        GRID_SIZE = 10
-        GRID_WIDTH, GRID_HEIGHT = 500, 500
-        CELL_SIZE = GRID_WIDTH // GRID_SIZE
-        GRID_LINE_WIDTH = 5
-        RECTANGLE_MARGIN = 2
+        grid_size = 10
+        grid_width, grid_height = 500, 500
+        cell_size = grid_width // grid_size
+        grid_line_width = 5
+        rectangle_margin = 2
 
-        GRID_COLOR = (50, 50, 50)
-        GRID_OUTLINE_COLOR = (99, 63, 43)
-        HOVER_COLOR = (255, 255, 255)
-        BAD_HOVER_COLOR = (255, 0, 0)
+        grid_color = (50, 50, 50)
+        grid_outline_color = (99, 63, 43)
+        hover_color = (255, 255, 255)
+        bad_hover_color = (255, 0, 0)
 
-        GRID_X = 50
-        GRID_Y = 80
+        grid_x = 50
+        grid_y = 80
 
-        GRID_X_PC = 730
-        GRID_Y_PC = 80
+        grid_x_pc = 730
+        grid_y_pc = 80
 
         hover_row = None
         hover_col = None
-        ATTACK = 0
+        attack = 0
         start_timer = 0
         once = 0
         once1 = 0
@@ -672,7 +672,7 @@ class GUI:
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
-                if event.type == pygame.MOUSEBUTTONDOWN and ATTACK == 0:
+                if event.type == pygame.MOUSEBUTTONDOWN and attack == 0:
                     if small_menu_button.rect.collidepoint(event.pos):
                         self.user_service.clean_board()
                         self.computer_service.clean_board()
@@ -681,14 +681,14 @@ class GUI:
                     if event.button == 1:  # Left mouse button
                         mouse_x, mouse_y = pygame.mouse.get_pos()
 
-                        for row in range(GRID_SIZE):
-                            for col in range(GRID_SIZE):
+                        for row in range(grid_size):
+                            for col in range(grid_size):
 
-                                rect_pc = pygame.Rect(GRID_X_PC + col * CELL_SIZE, GRID_Y_PC + row * CELL_SIZE, CELL_SIZE, CELL_SIZE)
+                                rect_pc = pygame.Rect(grid_x_pc + col * cell_size, grid_y_pc + row * cell_size, cell_size, cell_size)
                                 if rect_pc.collidepoint(mouse_x, mouse_y):
                                     if computer_board[row + 1][col + 1] == -1 or computer_board[row + 1][col + 1] == 1 or computer_board[row + 1][col + 1] == 2:
                                         result = self.user_service.attack(row + 1, col + 1)
-                                        ATTACK = 1
+                                        attack = 1
                                         if result == "plane_cockpit":
                                             no_planes_pc -= 1
                                             computer_board_text = game_font.render(
@@ -702,9 +702,9 @@ class GUI:
                     # Reset the hover color for all cells
                     hover_row, hover_col = None, None
 
-                    for row in range(GRID_SIZE):
-                        for col in range(GRID_SIZE):
-                            rect = pygame.Rect(GRID_X_PC + col * CELL_SIZE, GRID_Y_PC + row * CELL_SIZE, CELL_SIZE, CELL_SIZE)
+                    for row in range(grid_size):
+                        for col in range(grid_size):
+                            rect = pygame.Rect(grid_x_pc + col * cell_size, grid_y_pc + row * cell_size, cell_size, cell_size)
 
                             if rect.collidepoint(mouse_x, mouse_y):
                                 hover_row, hover_col = row, col
@@ -739,22 +739,22 @@ class GUI:
                 self.screen.blit(info_text, (60, 630))
                 small_menu_button.draw()
 
-                pygame.draw.rect(self.screen, GRID_OUTLINE_COLOR, (GRID_X - GRID_LINE_WIDTH, GRID_Y - GRID_LINE_WIDTH, GRID_WIDTH + 2 * GRID_LINE_WIDTH, GRID_HEIGHT + 2 * GRID_LINE_WIDTH))
+                pygame.draw.rect(self.screen, grid_outline_color, (grid_x - grid_line_width, grid_y - grid_line_width, grid_width + 2 * grid_line_width, grid_height + 2 * grid_line_width))
 
-                pygame.draw.rect(self.screen, GRID_OUTLINE_COLOR, (GRID_X_PC - GRID_LINE_WIDTH, GRID_Y_PC - GRID_LINE_WIDTH, GRID_WIDTH + 2 * GRID_LINE_WIDTH, GRID_HEIGHT + 2 * GRID_LINE_WIDTH))
+                pygame.draw.rect(self.screen, grid_outline_color, (grid_x_pc - grid_line_width, grid_y_pc - grid_line_width, grid_width + 2 * grid_line_width, grid_height + 2 * grid_line_width))
 
                 # Draw the grid
-                for row in range(GRID_SIZE):
-                    for col in range(GRID_SIZE):
-                        rect = pygame.Rect(GRID_X + col * CELL_SIZE, GRID_Y + row * CELL_SIZE, CELL_SIZE, CELL_SIZE)
+                for row in range(grid_size):
+                    for col in range(grid_size):
+                        rect = pygame.Rect(grid_x + col * cell_size, grid_y + row * cell_size, cell_size, cell_size)
 
                         pygame.draw.rect(self.screen, (200, 200, 200), rect, 2)
 
-                        inner_rect = pygame.Rect(rect.left + RECTANGLE_MARGIN, rect.top + RECTANGLE_MARGIN,
-                                                 rect.width - 2 * RECTANGLE_MARGIN, rect.height - 2 * RECTANGLE_MARGIN)
+                        inner_rect = pygame.Rect(rect.left + rectangle_margin, rect.top + rectangle_margin,
+                                                 rect.width - 2 * rectangle_margin, rect.height - 2 * rectangle_margin)
 
                         if user_board[row + 1][col + 1] == 1:
-                            pygame.draw.rect(self.screen, GRID_COLOR, inner_rect)
+                            pygame.draw.rect(self.screen, grid_color, inner_rect)
                         elif user_board[row + 1][col + 1] == 2:
                             pygame.draw.rect(self.screen, (138, 0, 7), inner_rect)
                         elif user_board[row + 1][col + 1] == 3:
@@ -770,14 +770,14 @@ class GUI:
                             elif user_board[row + 1][col + 1] == 2:
                                 pygame.draw.rect(self.screen, (0, 98, 24), inner_rect)
 
-                for row in range(GRID_SIZE):
-                    for col in range(GRID_SIZE):
-                        rect = pygame.Rect(GRID_X_PC + col * CELL_SIZE, GRID_Y_PC + row * CELL_SIZE, CELL_SIZE, CELL_SIZE)
+                for row in range(grid_size):
+                    for col in range(grid_size):
+                        rect = pygame.Rect(grid_x_pc + col * cell_size, grid_y_pc + row * cell_size, cell_size, cell_size)
 
                         pygame.draw.rect(self.screen, (200, 200, 200), rect, 2)
 
-                        inner_rect = pygame.Rect(rect.left + RECTANGLE_MARGIN, rect.top + RECTANGLE_MARGIN,
-                                                 rect.width - 2 * RECTANGLE_MARGIN, rect.height - 2 * RECTANGLE_MARGIN)
+                        inner_rect = pygame.Rect(rect.left + rectangle_margin, rect.top + rectangle_margin,
+                                                 rect.width - 2 * rectangle_margin, rect.height - 2 * rectangle_margin)
 
                         if computer_board[row + 1][col + 1] == 3:
                             pygame.draw.rect(self.screen, (127, 127, 127), inner_rect)
@@ -792,13 +792,13 @@ class GUI:
                             elif computer_board[row + 1][col + 1] == 2:
                                 pygame.draw.rect(self.screen, (0, 98, 24), inner_rect)
 
-                        if hover_row == row and hover_col == col and ATTACK == 0:
+                        if hover_row == row and hover_col == col and attack == 0:
                             if computer_board[row + 1][col + 1] == 3 or computer_board[row + 1][col + 1] == 4 or computer_board[row + 1][col + 1] == 5:
-                                pygame.draw.rect(self.screen, BAD_HOVER_COLOR, pygame.Rect(GRID_X_PC + col * CELL_SIZE, GRID_Y_PC + row * CELL_SIZE, CELL_SIZE, CELL_SIZE - 1))
+                                pygame.draw.rect(self.screen, bad_hover_color, pygame.Rect(grid_x_pc + col * cell_size, grid_y_pc + row * cell_size, cell_size, cell_size - 1))
                             else:
-                                pygame.draw.rect(self.screen, HOVER_COLOR, pygame.Rect(GRID_X_PC + col * CELL_SIZE, GRID_Y_PC + row * CELL_SIZE, CELL_SIZE, CELL_SIZE))
+                                pygame.draw.rect(self.screen, hover_color, pygame.Rect(grid_x_pc + col * cell_size, grid_y_pc + row * cell_size, cell_size, cell_size))
 
-                if ATTACK == 1:
+                if attack == 1:
                     self.screen.blit(semi_opaque_surface, (0, 0))
                     current_timer = pygame.time.get_ticks()
                     if current_timer - start_timer > 2000:
@@ -834,7 +834,7 @@ class GUI:
                                             False, 'black')
                                         once1 = 1
                             if current_timer - start_timer > 8000:
-                                ATTACK = 0
+                                attack = 0
                                 start_timer = 0
                                 once = 0
                                 once1 = 0

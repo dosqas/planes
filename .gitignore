@@ -1,34 +1,26 @@
-# Ignore system-specific files
 .DS_Store
 Thumbs.db
 
-# Byte-compiled files
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
 
-# Virtual environments
 venv/
 env/
 
-# Logs and cache
 *.log
 .cache/
 
-# Editor and IDE files
 .vscode/
 .idea/
 *.swp
 
-# Python dependencies (if using a virtual environment)
 Pipfile
 Pipfile.lock
 
-# Built files (if any)
 dist/
 build/
 *.egg-info/
 
-# Game-specific assets (if large and not version-controlled)
-assets/*.psd  # Example for large Photoshop files
+assets/*.psd

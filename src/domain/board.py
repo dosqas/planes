@@ -6,7 +6,7 @@ class Board:
         self._board = [[-1 for _ in range(11)] for _ in range(11)]
         for i in range(0, 11):
             self._board[0][i] = i
-            self._board[i][0] = ' ABCDEFGHIJ'[i]
+            self._board[i][0] = int(ord('A') + i - 1) if i > 0 else ' '
 
     def __getitem__(self, item):
         """
