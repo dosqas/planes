@@ -22,7 +22,7 @@ To play the game, follow these steps:
    python --version
    ```
 
-3. **Install required dependencies** (if any). If there's a `requirements.txt` file, run:
+3. **Install required dependencies**. Run:
    ```bash
    pip install -r requirements.txt
    ```
