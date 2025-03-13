@@ -29,7 +29,7 @@ To play the game, follow these steps:
 
 4. **Run the game**:
    ```bash
-   python src\main.py
+   python -m src.main
    ```
 
 ## How to Play
