@@ -1,6 +1,47 @@
 import time
 
 
+def _print_board(board):
+    """
+    Prints a given board (user or computer), with optional final state customization.
+    :param board: The board to print.
+    :return:
+    """
+    for count in range(0, 10):
+        print("\033[43m\033[30m", board[0][count], " \033[0m", end="")
+    print("\033[43m\033[30m", board[0][10], " \033[0m", end="", sep="")
+    print()
+
+    for count in range(1, 11):
+        for count2 in range(0, 11):
+            cell = board[count][count2]
+            if cell == -1:
+                color = "\033[44m"  # Blue for water
+                symbol = "\u25A0"
+            elif cell == 1 or cell == 2:
+                color = "\033[42m"  # Green for ship
+                symbol = "\u25A0"
+            elif cell == 3:
+                color = "\033[48;5;243m"  # Light gray for hit
+                symbol = "\u25A0"
+            elif cell == 4:
+                color = "\033[48;5;208m"  # Orange for near hit
+                symbol = "\u25A0"
+            elif cell == 5:
+                color = "\033[41m"  # Red for miss
+                symbol = "\u25A0"
+            elif cell in "ABCDEFGHIJ":  # For A-J characters
+                color = "\033[43m"  # Yellow for the special ships
+                symbol = cell
+            else:
+                color = "\033[0m"  # Default color for empty cells
+                symbol = "  "
+
+            # Print the cell with its color and symbol
+            print(f"{color}{symbol} \033[0m", end="")
+        print()
+
+
 class UI:
     def __init__(self, user_service, computer_service):
         """
@@ -61,6 +102,15 @@ class UI:
             else:
                 print("\033[41m\033[30mInvalid option!\033[0m\033[0m\n")
 
+    @staticmethod
+    def is_valid_placement_letter(placement):
+        """
+        Checks if the first character of the placement string is a valid letter (A-J).
+        :param placement: The placement string to check.
+        :return: True if the first character is A-J, False otherwise.
+        """
+        return placement and placement[0].upper() in {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J"}
+
     def _phase_one_game(self):
         """
         The strategy phase of the game.
@@ -103,9 +153,7 @@ class UI:
                         placement[0] = placement[0].upper()
                         placement[2] = placement[2].lower()
 
-                        if (placement[0] == "A" or placement[0] == "B" or placement[0] == "C" or placement[0] == "D" or
-                                placement[0] == "E" or placement[0] == "F" or placement[0] == "G" or placement[0] == "H" or
-                                placement[0] == "I" or placement[0] == "J"):
+                        if self.is_valid_placement_letter(placement[0]):
                             if placement[1].isdigit() and 0 < int(placement[1]) < 11:
                                 if placement[2] == "up" or placement[2] == "down" or placement[2] == "left" or placement[2] == "right":
                                     row = " ABCDEFGHIJ".index(placement[0])
@@ -167,9 +215,7 @@ class UI:
                     if len(placement) == 2:
                         placement[0] = placement[0].upper()
 
-                        if (placement[0] == "A" or placement[0] == "B" or placement[0] == "C" or placement[0] == "D" or
-                                placement[0] == "E" or placement[0] == "F" or placement[0] == "G" or placement[0] == "H" or
-                                placement[0] == "I" or placement[0] == "J"):
+                        if self.is_valid_placement_letter(placement[0]):
                             if placement[1].isdigit() and 0 < int(placement[1]) < 11:
                                 row = " ABCDEFGHIJ".index(placement[0])
                                 column = int(placement[1])
@@ -228,65 +274,62 @@ class UI:
         print("\033[43m\033[30mReturning to main menu...\033[0m\033[0m\n")
         time.sleep(1)
 
+    @staticmethod
+    def _print_board(board):
+        """
+        Prints a given board (user or computer), with optional final state customization.
+        :param board: The board to print.
+        :return:
+        """
+        for count in range(0, 10):
+            print("\033[43m\033[30m", board[0][count], " \033[0m", end="")
+        print("\033[43m\033[30m", board[0][10], " \033[0m", end="", sep="")
+        print()
+
+        for count in range(1, 11):
+            for count2 in range(0, 11):
+                cell = board[count][count2]
+                if cell == -1:
+                    color = "\033[44m"  # Blue for water
+                    symbol = "\u25A0"
+                elif cell == 1 or cell == 2:
+                    color = "\033[42m"  # Green for ship
+                    symbol = "\u25A0"
+                elif cell == 3:
+                    color = "\033[48;5;243m"  # Light gray for hit
+                    symbol = "\u25A0"
+                elif cell == 4:
+                    color = "\033[48;5;208m"  # Orange for near hit
+                    symbol = "\u25A0"
+                elif cell == 5:
+                    color = "\033[41m"  # Red for miss
+                    symbol = "\u25A0"
+                elif str(cell) in "ABCDEFGHIJ":  # For A-J characters
+                    color = "\033[43m"  # Yellow for the special ships
+                    symbol = cell
+                else:
+                    color = "\033[0m"  # Default color for empty cells
+                    symbol = "  "
+
+                # Print the cell with its color and symbol
+                print(f"{color}{symbol} \033[0m", end="")
+            print()
+
     def _print_user_board(self):
         """
         Prints the user's board.
         :return:
         """
         board = self.__user_service.get_board()
-        for count in range(0, 10):
-            print("\033[43m\033[30m", board[0][count], " \033[0m", end="")
-        print("\033[43m\033[30m", board[0][10], " \033[0m", end="", sep="")
-        print()
-        for count in range(1, 11):
-            for count2 in range(0, 11):
-                if board[count][count2] == -1:
-                    print("\033[44m  \u25A0 \033[0m", end="")
-                elif board[count][count2] == 1:
-                    print("\033[38;5;208m\033[40m  \u25A0 \033[0m\033[0m", end="")
-                elif board[count][count2] == 2:
-                    print("\033[31m\033[40m  \u25A0 \033[0m\033[0m", end="")
-                elif (board[count][count2] == "A" or board[count][count2] == "B" or board[count][count2] == "C" or
-                      board[count][count2] == "D" or board[count][count2] == "E" or board[count][count2] == "F" or
-                      board[count][count2] == "G" or board[count][count2] == "H" or board[count][count2] == "I" or
-                      board[count][count2] == "J"):
-                    print("\033[43m\033[30m", board[count][count2], "\033[0m\033[0m", end="")
-                elif board[count][count2] == 3:
-                    print("\033[48;5;243m\033[30m  \u25A0 \033[0m\033[0m", end="")
-                elif board[count][count2] == 4:
-                    print("\033[48;5;208m\033[30m  \u25A0 \033[0m\033[0m", end="")
-                elif board[count][count2] == 5:
-                    print("\033[41m\033[30m  \u25A0 \033[0m\033[0m", end="")
-            print()
+        self._print_board(board)
 
     def _print_user_board_final(self):
         """
-        Prints the user's board, at the end.
+        Prints the user's board at the end.
         :return:
         """
         board = self.__user_service.get_board()
-        for count in range(0, 10):
-            print("\033[43m\033[30m", board[0][count], " \033[0m", end="")
-        print("\033[43m\033[30m", board[0][10], " \033[0m", end="", sep="")
-        print()
-        for count in range(1, 11):
-            for count2 in range(0, 11):
-                if board[count][count2] == -1:
-                    print("\033[44m  \u25A0 \033[0m", end="")
-                elif board[count][count2] == 1 or board[count][count2] == 2:
-                    print("\033[42m  \u25A0 \033[0m", end="")
-                elif (board[count][count2] == "A" or board[count][count2] == "B" or board[count][count2] == "C" or
-                      board[count][count2] == "D" or board[count][count2] == "E" or board[count][count2] == "F" or
-                      board[count][count2] == "G" or board[count][count2] == "H" or board[count][count2] == "I" or
-                      board[count][count2] == "J"):
-                    print("\033[43m\033[30m", board[count][count2], "\033[0m\033[0m", end="")
-                elif board[count][count2] == 3:
-                    print("\033[48;5;243m\033[30m  \u25A0 \033[0m\033[0m", end="")
-                elif board[count][count2] == 4:
-                    print("\033[48;5;208m\033[30m  \u25A0 \033[0m\033[0m", end="")
-                elif board[count][count2] == 5:
-                    print("\033[41m\033[30m  \u25A0 \033[0m\033[0m", end="")
-            print()
+        self._print_board(board)
 
     def _print_computer_board(self):
         """
@@ -294,113 +337,29 @@ class UI:
         :return:
         """
         board = self.__computer_service.get_board()
-        for count in range(0, 10):
-            print("\033[43m\033[30m", board[0][count], " \033[0m", end="")
-        print("\033[43m\033[30m", board[0][10], " \033[0m", end="", sep="")
-        print()
-        for count in range(1, 11):
-            for count2 in range(0, 11):
-                if board[count][count2] == -1 or board[count][count2] == 1 or board[count][count2] == 2:
-                    print("\033[44m  \u25A0 \033[0m", end="")
-                elif board[count][count2] == 3:
-                    print("\033[48;5;243m\033[30m  \u25A0 \033[0m\033[0m", end="")
-                elif board[count][count2] == 4:
-                    print("\033[48;5;208m\033[30m  \u25A0 \033[0m\033[0m", end="")
-                elif board[count][count2] == 5:
-                    print("\033[41m\033[30m  \u25A0 \033[0m\033[0m", end="")
-                elif (board[count][count2] == "A" or board[count][count2] == "B" or board[count][count2] == "C" or
-                      board[count][count2] == "D" or board[count][count2] == "E" or board[count][count2] == "F" or
-                      board[count][count2] == "G" or board[count][count2] == "H" or board[count][count2] == "I" or
-                      board[count][count2] == "J"):
-                    print("\033[43m\033[30m", board[count][count2], "\033[0m\033[0m", end="")
-            print()
+        self._print_board(board)
 
     def _print_computer_board_final(self):
         """
-        Prints the computer's board, at the end.
+        Prints the computer's board at the end.
         :return:
         """
         board = self.__computer_service.get_board()
-        for count in range(0, 10):
-            print("\033[43m\033[30m", board[0][count], " \033[0m", end="")
-        print("\033[43m\033[30m", board[0][10], " \033[0m", end="", sep="")
-        print()
-        for count in range(1, 11):
-            for count2 in range(0, 11):
-                if board[count][count2] == -1:
-                    print("\033[44m  \u25A0 \033[0m", end="")
-                elif board[count][count2] == 1 or board[count][count2] == 2:
-                    print("\033[42m  \u25A0 \033[0m", end="")
-                elif board[count][count2] == 3:
-                    print("\033[48;5;243m\033[30m  \u25A0 \033[0m\033[0m", end="")
-                elif board[count][count2] == 4:
-                    print("\033[48;5;208m\033[30m  \u25A0 \033[0m\033[0m", end="")
-                elif board[count][count2] == 5:
-                    print("\033[41m\033[30m  \u25A0 \033[0m\033[0m", end="")
-                elif (board[count][count2] == "A" or board[count][count2] == "B" or board[count][count2] == "C" or
-                      board[count][count2] == "D" or board[count][count2] == "E" or board[count][count2] == "F" or
-                      board[count][count2] == "G" or board[count][count2] == "H" or board[count][count2] == "I" or
-                      board[count][count2] == "J"):
-                    print("\033[43m\033[30m", board[count][count2], "\033[0m\033[0m", end="")
-            print()
+        self._print_board(board)
 
     def _print_boards(self):
         """
         Prints the user's and computer's boards.
         :return:
         """
-        print("\n\033[43m\033[30mYour board currently:\033[0m\033[0m                                              \033[43m\033[30mThe computer's board currently:\033[0m\033[0m")
+        print(
+            "\n\033[43m\033[30mYour board currently:\033[0m\033[0m                                              \033[43m\033[30mThe computer's board currently:\033[0m\033[0m")
         user_board = self.__user_service.get_board()
         computer_board = self.__computer_service.get_board()
-        for count in range(0, 10):
-            print("\033[43m\033[30m", user_board[0][count], " \033[0m", end="")
-        print("\033[43m\033[30m", user_board[0][10], " \033[0m", end="", sep="")
 
+        self._print_board(user_board)
         print("                        ", end="")
-
-        for count in range(0, 10):
-            print("\033[43m\033[30m", computer_board[0][count], " \033[0m", end="")
-        print("\033[43m\033[30m", computer_board[0][10], " \033[0m", end="", sep="")
-
-        print()
-        for count in range(1, 11):
-            for count2 in range(0, 11):
-                if user_board[count][count2] == -1:
-                    print("\033[44m  \u25A0 \033[0m", end="")
-                elif user_board[count][count2] == 1:
-                    print("\033[38;5;208m\033[40m  \u25A0 \033[0m\033[0m", end="")
-                elif user_board[count][count2] == 2:
-                    print("\033[31m\033[40m  \u25A0 \033[0m\033[0m", end="")
-                elif (user_board[count][count2] == "A" or user_board[count][count2] == "B" or user_board[count][count2] == "C" or
-                      user_board[count][count2] == "D" or user_board[count][count2] == "E" or user_board[count][count2] == "F" or
-                      user_board[count][count2] == "G" or user_board[count][count2] == "H" or user_board[count][count2] == "I" or
-                      user_board[count][count2] == "J"):
-                    print("\033[43m\033[30m", user_board[count][count2], "\033[0m\033[0m", end="")
-                elif user_board[count][count2] == 3:
-                    print("\033[48;5;243m\033[30m  \u25A0 \033[0m\033[0m", end="")
-                elif user_board[count][count2] == 4:
-                    print("\033[48;5;208m\033[30m  \u25A0 \033[0m\033[0m", end="")
-                elif user_board[count][count2] == 5:
-                    print("\033[41m\033[30m  \u25A0 \033[0m\033[0m", end="")
-
-            print("                        ", end="")
-
-            for count2 in range(0, 11):
-                if computer_board[count][count2] == -1 or computer_board[count][count2] == 1 or computer_board[count][count2] == 2:
-                    print("\033[44m  \u25A0 \033[0m", end="")
-                elif computer_board[count][count2] == 3:
-                    print("\033[48;5;243m\033[30m  \u25A0 \033[0m\033[0m", end="")
-                elif computer_board[count][count2] == 4:
-                    print("\033[48;5;208m\033[30m  \u25A0 \033[0m\033[0m", end="")
-                elif computer_board[count][count2] == 5:
-                    print("\033[41m\033[30m  \u25A0 \033[0m\033[0m", end="")
-                elif (computer_board[count][count2] == "A" or computer_board[count][count2] == "B" or computer_board[count][count2] == "C" or
-                      computer_board[count][count2] == "D" or computer_board[count][count2] == "E" or computer_board[count][count2] == "F" or
-                      computer_board[count][count2] == "G" or computer_board[count][count2] == "H" or computer_board[count][count2] == "I" or
-                      computer_board[count][count2] == "J"):
-                    print("\033[43m\033[30m", computer_board[count][count2], "\033[0m\033[0m", end="")
-
-            print()
+        self._print_board(computer_board)
 
         self._print_ingame_board_legend()
 
@@ -409,57 +368,14 @@ class UI:
         Prints the final boards
         :return:
         """
-        print("\n\033[43m\033[30mYour board in the end:\033[0m\033[0m                                             \033[43m\033[30mThe computer's board in the end:\033[0m\033[0m")
+        print(
+            "\n\033[43m\033[30mYour board in the end:\033[0m\033[0m                                             \033[43m\033[30mThe computer's board in the end:\033[0m\033[0m")
         user_board = self.__user_service.get_board()
         computer_board = self.__computer_service.get_board()
-        for count in range(0, 10):
-            print("\033[43m\033[30m", user_board[0][count], " \033[0m", end="")
-        print("\033[43m\033[30m", user_board[0][10], " \033[0m", end="", sep="")
 
+        self._print_board(user_board)
         print("                        ", end="")
-
-        for count in range(0, 10):
-            print("\033[43m\033[30m", computer_board[0][count], " \033[0m", end="")
-        print("\033[43m\033[30m", computer_board[0][10], " \033[0m", end="", sep="")
-
-        print()
-        for count in range(1, 11):
-            for count2 in range(0, 11):
-                if user_board[count][count2] == -1:
-                    print("\033[44m  \u25A0 \033[0m", end="")
-                elif user_board[count][count2] == 1 or user_board[count][count2] == 2:
-                    print("\033[42m  \u25A0 \033[0m", end="")
-                elif (user_board[count][count2] == "A" or user_board[count][count2] == "B" or user_board[count][count2] == "C" or
-                      user_board[count][count2] == "D" or user_board[count][count2] == "E" or user_board[count][count2] == "F" or
-                      user_board[count][count2] == "G" or user_board[count][count2] == "H" or user_board[count][count2] == "I" or
-                      user_board[count][count2] == "J"):
-                    print("\033[43m\033[30m", user_board[count][count2], "\033[0m\033[0m", end="")
-                elif user_board[count][count2] == 3:
-                    print("\033[48;5;243m\033[30m  \u25A0 \033[0m\033[0m", end="")
-                elif user_board[count][count2] == 4:
-                    print("\033[48;5;208m\033[30m  \u25A0 \033[0m\033[0m", end="")
-                elif user_board[count][count2] == 5:
-                    print("\033[41m\033[30m  \u25A0 \033[0m\033[0m", end="")
-
-            print("                        ", end="")
-
-            for count2 in range(0, 11):
-                if computer_board[count][count2] == -1:
-                    print("\033[44m  \u25A0 \033[0m", end="")
-                elif computer_board[count][count2] == 1 or computer_board[count][count2] == 2:
-                    print("\033[42m  \u25A0 \033[0m", end="")
-                elif computer_board[count][count2] == 3:
-                    print("\033[48;5;243m\033[30m  \u25A0 \033[0m\033[0m", end="")
-                elif computer_board[count][count2] == 4:
-                    print("\033[48;5;208m\033[30m  \u25A0 \033[0m\033[0m", end="")
-                elif computer_board[count][count2] == 5:
-                    print("\033[41m\033[30m  \u25A0 \033[0m\033[0m", end="")
-                elif (computer_board[count][count2] == "A" or computer_board[count][count2] == "B" or computer_board[count][count2] == "C" or
-                      computer_board[count][count2] == "D" or computer_board[count][count2] == "E" or computer_board[count][count2] == "F" or
-                      computer_board[count][count2] == "G" or computer_board[count][count2] == "H" or computer_board[count][count2] == "I" or
-                      computer_board[count][count2] == "J"):
-                    print("\033[43m\033[30m", computer_board[count][count2], "\033[0m\033[0m", end="")
-            print()
+        self._print_board(computer_board)
 
         self._print_ingame_board_legend_final()
 
