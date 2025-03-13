@@ -29,22 +29,20 @@ class TestingLayers(unittest.TestCase):
         self.__user_board.update_board(self.__board)
         self.assertEqual(self.__user_board.return_board(), self.__board)
 
+    def clean_and_check_board(self, service):
+        service.clean_board()
+        test = True
+        for x in range(1, 11):
+            for y in range(1, 11):
+                if service.get_board()[x][y] != -1:
+                    test = False
+        self.assertEqual(test, True)
+
     # Testing the service layer
     def test_service(self):
-        self.__computer_service.clean_board()
-        test = True
-        for x in range(1, 11):
-            for y in range(1, 11):
-                if self.__computer_service.get_board()[x][y] != -1:
-                    test = False
-        self.assertEqual(test, True)
-        self.__user_service.clean_board()
-        test = True
-        for x in range(1, 11):
-            for y in range(1, 11):
-                if self.__user_service.get_board()[x][y] != -1:
-                    test = False
-        self.assertEqual(test, True)
+
+        self.clean_and_check_board(self.__computer_service)
+        self.clean_and_check_board(self.__user_service)
 
         self.assertEqual(self.__user_service.valid_placement(1, 1, 0), False)
         self.assertEqual(self.__user_service.valid_placement(4, 5, 2), True)
