@@ -504,7 +504,7 @@ class UI:
         """
         print("\033[43m\033[30m        [Tutorial]   \033[0m\033[0m\n"
               "\033[43m\033[30m   [How to play +rules]   \033[0m\033[0m\n"
-              "\033[43m\033[30m  [Programmed by dosqas]   \033[0m\033[0m\n")
+              "\033[43m\033[30m  [Programmed by @dosqas]   \033[0m\033[0m\n")
 
         print("\033[43m\033[30mPlanes is a strategy game played on a 10x10 board, between two players.\033[0m\033[0m\n"
               "\033[43m\033[30mEach player can only see their own board.\033[0m\033[0m\n")

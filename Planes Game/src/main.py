@@ -1,3 +1,8 @@
+import sys
+import os
+
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+
 from ui.ui import UI
 from ui.gui import GUI
 
@@ -8,7 +13,7 @@ from repository.computer_board_repository import ComputerBoard
 from repository.user_board_repository import UserBoard
 
 import unittest
-from src.tests.test import TestingLayers
+from tests.test import TestingLayers
 
 
 def start():

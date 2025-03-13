@@ -10,8 +10,11 @@ class Board:
 
     def __getitem__(self, item):
         """
-        getitem method for the board
-        :param item:
-        :return:
+        Allows indexing using either integers (board[row][col]) or chess-like notation (board['A', 1]).
         """
-        return self._board[item]
+        if isinstance(item, tuple) and len(item) == 2:
+            row, col = item
+            if isinstance(row, str):
+                row = ' ABCDEFGHIJ'.index(row)  # Convert 'A'->1, 'B'->2, ...
+            return self._board[row][col]
+        return self._board[item]  # Default integer-based indexing
