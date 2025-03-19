@@ -3,7 +3,7 @@
 ## Overview
 Planes Game is a strategy-based guessing game, similar to Battleships, but with a unique twist: instead of ships of different sizes, players must locate and shoot down three planes hidden on a grid. A plane can only be eliminated by successfully identifying and hitting its **head/cockpit**.
 
-This project was developed in **Python** as part of my final homework for the **Fundamentals of Programming** course in my first year of university.
+This project was developed in **Python** with **Pygame** as part of my final homework for the **Fundamentals of Programming** course in my first year of university.
 
 ## AI Algorithm
 The AI opponent in this game is powered by a **custom function that I designed**, inspired by the **probability density function used in Battleship's smart AI**. This function has been adapted to fit the unique mechanics of the Planes Game, allowing the AI to make **strategic moves** based on probability rather than random guessing, improving its accuracy and efficiency over time.
