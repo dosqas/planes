@@ -105,6 +105,13 @@ python -m src.main
 
 ---
 
+## Acknowledgements
+
+* Thanks to the creators of the images used in this game. 
+* Special thanks to the **Pygame** community for the fantastic library that made game development enjoyable and accessible.
+
+---
+
 ## 📄 License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
