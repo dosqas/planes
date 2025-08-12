@@ -11,7 +11,7 @@ Recreating it as a full-fledged Python game was not only a fun challenge, but al
 
 This project was developed in **Python** as my final homework for the **Fundamentals of Programming** course during my **first year of university**.
 
-![Main Menu](demo/mainmenu.gif)
+![Main Menu](demo/mainmenu.gif)  
 *Smooth and simple navigation before the strategic battle begins!*
 
 ---
@@ -32,11 +32,11 @@ This makes it a **challenging and adaptive opponent** for players of all skill l
 
 ## 🌟 Features & Gameplay Highlights
 
-* 🗺️ **Strategy Phase** - Place your planes anywhere on the board and rotate them with the **spacebar** to outwit the AI.
+* 🗺️ **Strategy Phase** - Place your planes anywhere on the board and rotate them with the **spacebar** to outwit the AI.  
   ![Strategy Phase](demo/strategyphase.gif)
 
 
-* 🎯 **Play Phase** - Take turns with the smart AI to guess your opponent’s plane locations. Hit the cockpit to destroy a plane!
+* 🎯 **Play Phase** - Take turns with the smart AI to guess your opponent’s plane locations. Hit the cockpit to destroy a plane!  
   ![Play Phase](demo/playphase.gif)
 
 
