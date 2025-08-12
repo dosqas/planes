@@ -1,46 +1,116 @@
-# Planes Game
+# 🛩️ Planes Game
 
-## Overview
-Planes Game is a strategy-based guessing game, similar to Battleships, but with a unique twist: instead of ships of different sizes, players must locate and shoot down three planes hidden on a grid. A plane can only be eliminated by successfully identifying and hitting its **head/cockpit**.
+## 🎉 Introduction
 
-This project was developed in **Python** as part of my final homework for the **Fundamentals of Programming** course in my first year of university.
+Welcome to **Planes**! It is a strategy-based guessing game inspired by *Battleship*, but with a thrilling twist!
+Instead of sinking ships, your mission is to locate and shoot down **three hidden planes** on a 10×10 grid.
+The catch? A plane can only be destroyed by hitting its **head/cockpit**.
 
-## AI Algorithm
-The AI opponent in this game is powered by a **custom function that I designed**, inspired by the **probability density function used in Battleship's smart AI**. This function has been adapted to fit the unique mechanics of the Planes Game, allowing the AI to make **strategic moves** based on probability rather than random guessing, improving its accuracy and efficiency over time.
+This game is very close to my heart since I used to play it on paper with my classmates back in elementary school, making guesses and sketching planes during breaks. My parents also played it when they were young and enjoyed it just as much.
+Recreating it as a full-fledged Python game was not only a fun challenge, but also a nostalgic trip back to those moments.
 
-## Installation Instructions
-To play the game, follow these steps:
+This project was developed in **Python** as my final homework for the **Fundamentals of Programming** course during my **first year of university**.
+
+![Main Menu](demo/mainmenu.gif)
+*Smooth and simple navigation before the strategic battle begins!*
+
+---
+
+## 🧠 AI Opponent
+
+The game features an **intelligent AI** powered by a custom algorithm I designed, inspired by the **probability density function** used in smart Battleship AIs.
+
+Unlike random guessing, this AI:
+
+* 📊 Calculates the most probable locations of your planes.
+* 🎯 Adjusts its guesses based on previous hits and misses.
+* 🔄 Learns and improves efficiency during the match.
+
+This makes it a **challenging and adaptive opponent** for players of all skill levels.
+
+---
+
+## 🌟 Features & Gameplay Highlights
+
+* 🗺️ **Strategy Phase** - Place your planes anywhere on the board and rotate them with the **spacebar** to outwit the AI.
+  ![Strategy Phase](demo/strategyphase.gif)
+
+
+* 🎯 **Play Phase** - Take turns with the smart AI to guess your opponent’s plane locations. Hit the cockpit to destroy a plane!
+  ![Play Phase](demo/playphase.gif)
+
+
+* 🧠 **Smart AI Opponent** – Uses a probability-based targeting system instead of random guessing, making the challenge more engaging.
+
+
+* 🎮 **Turn-Based Gameplay** – Fair play with alternating turns between you and the AI.
+
+
+* 📊 **Dynamic Difficulty** – The AI adapts based on your moves and accuracy, keeping the challenge balanced.
+
+---
+
+## 🏆 Challenges & Learnings
+
+The **most challenging part** of developing this game was designing the **smart AI**.
+I researched how probability density functions are used in advanced Battleship AIs and then adapted those ideas to fit the unique rules of Planes.
+The result is my **own original algorithm**, custom-built for this game.
+
+Through this process, I:
+
+* 🔍 Learned how to analyze and adapt an existing algorithm to a new problem.
+* 💡 Practiced breaking down complex logic into smaller, testable components.
+* 🐍 Improved my Python development skills, especially in structuring a project and handling game states.
+* 🎯 Gained experience in balancing AI difficulty to make it fun yet competitive.
+
+This was both a **technical challenge** and a **great learning experience**.
+
+---
+
+## ⚙️ Requirements
+
+* Python **3.x**
+* `pip` for installing dependencies
+
+---
+
+## 🚀 Installation
 
 1. **Clone the repository**:
+
    ```bash
-   git clone https://github.com/dosqas/Planes-Game.git
-   cd Planes-Game
+   git clone https://github.com/dosqas/planes.git
+   cd planes
    ```
 
-2. **Ensure you have Python installed** (version 3.x recommended). You can check your Python version with:
+2. **Check your Python version**:
+
    ```bash
    python --version
    ```
 
-3. **Install required dependencies**. Run:
+3. **Install dependencies**:
+
    ```bash
    pip install -r requirements.txt
    ```
 
-4. **Run the game**:
-   ```bash
-   python -m src.main
-   ```
+---
 
-## How to Play
-- The game is played on a 10x10 grid where three planes are hidden.
-- Your goal is to locate the **heads** of all three planes by making strategic guesses.
-- The AI opponent will also try to find your planes using an advanced probability-based algorithm.
-- The first player to shoot down all enemy planes wins!
+## ▶️ Running the Game
 
-## Contact
-For any questions, suggestions, or issues, feel free to reach out to me:
-- **Email**: [sebastian.soptelea@proton.me](mailto:sebastian.soptelea@proton.me)
+```bash
+python -m src.main
+```
 
-Enjoy the game and have fun strategizing! 🚀
+---
 
+## 📄 License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+---
+
+## 💡 Contact
+
+Questions, feedback, or ideas? Reach out anytime at [sebastian.soptelea@proton.me](mailto:sebastian.soptelea@proton.me).
